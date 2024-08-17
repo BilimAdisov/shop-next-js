@@ -7,6 +7,15 @@ const ProductService = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["product"],
   endpoints: (builder) => ({
+    getStoreProductsById: builder.query({
+      query: ({ productId, language }) => {
+        return {
+          url: `products/${productId}?language=${language}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["product"],
+    }),
     getStoreProducts: builder.query({
       query: ({ storeId, page, size, search }) => {
         return {
@@ -55,4 +64,5 @@ export const {
   usePostStoreProductMutation,
   usePutProductMutation,
   useDeleteProductMutation,
+  useGetStoreProductsByIdQuery,
 } = ProductService;

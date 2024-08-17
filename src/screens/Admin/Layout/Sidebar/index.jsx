@@ -1,6 +1,7 @@
 import React from "react";
 import { MdOutlineStoreMallDirectory } from "react-icons/md";
 import { BiCategoryAlt } from "react-icons/bi";
+import Link from "next/link";
 
 export const Sidebar = () => {
   const ROUTES = [
@@ -15,9 +16,9 @@ export const Sidebar = () => {
         {ROUTES.map((item, index) => (
           <div key={index} className="flex items-center gap-2 mb-3 hover:bg-Gray group px-4 py-2">
             <item.icon className="text-sidebar text-xl hover:scale-105 group-hover:text-white" />
-            <a className="" href={item.route}>
+            <Link className="" href={item.route}>
               <li className="text-sidebar hover:underline text-sm mt-1 group-hover:text-white">{item.name}</li>
-            </a>
+            </Link>
           </div>
         ))}
       </ul>

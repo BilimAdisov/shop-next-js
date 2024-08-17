@@ -19,6 +19,8 @@ export const AddStore = ({ store, setStore }) => {
     const response = await postStore({ body: store });
   };
 
+  let type = "MARKET1";
+
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="w-full flex items-center gap-2">
@@ -35,29 +37,41 @@ export const AddStore = ({ store, setStore }) => {
           className="text-Gray"
         />
       </div>
-      <div className="w-full flex items-center gap-2">
-        <Select
-          placeholder="выберите язык"
-          label="Маркет"
-          value={store.market}
-          onChange={(e) => changeValue(e.target.value, "market")}
-          className="text-Gray"
-          options={MARKETS}
-        />
+      {type !== "MARKET" && (
+        <div className="w-full flex items-center gap-2">
+          <Select
+            placeholder="выберите маркет"
+            label="Маркет"
+            value={store.market}
+            onChange={(e) => changeValue(e.target.value, "market")}
+            className="text-Gray"
+            options={MARKETS}
+          />
+          <Input
+            label="Контейнер"
+            value={store.container}
+            onChange={(e) => changeValue(e.target.value, "container")}
+            className="text-Gray"
+          />
+        </div>
+      )}
+      {type === "MARKET" && (
         <Input
-          label="Контейнер"
+          label="Полный адрес"
           value={store.container}
           onChange={(e) => changeValue(e.target.value, "container")}
-          className="text-Gray"
+          className="text-Gray w-full"
         />
-      </div>
+      )}
       <div className="w-full flex items-center gap-2">
-        <Input
-          label="Ряд"
-          value={store.row}
-          onChange={(e) => changeValue(e.target.value, "row")}
-          className="text-Gray max-w-32"
-        />
+        {type !== "MARKET" ?? (
+          <Input
+            label="Ряд"
+            value={store.row}
+            onChange={(e) => changeValue(e.target.value, "row")}
+            className="text-Gray max-w-32"
+          />
+        )}
         <Select
           placeholder="выберите язык"
           label="Язык"

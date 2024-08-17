@@ -1,35 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { useGetStoreProductsQuery } from "@/services/product.service";
-import { useGetOneStoreQuery } from "@/services/store.service";
-import { ProductContainer } from "@/components/Containers/ProductContainer";
+import { useSelector } from "react-redux";
 import { ProductCard } from "@/components/UI/Cards/ProductCard";
-import { PRODUCT_DATA } from "@/utils/consts";
+import {
+  useGetStoreProductsByIdQuery,
+  useGetStoreProductsQuery,
+} from "@/services/product.service";
+import { useGetOneStoreQuery } from "@/services/store.service";
 
 export default function Main() {
-  const {search} = useSelector(state => state.helper)
+  const { search } = useSelector((state) => state.helper);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
 
-  const { data: AdminStore } = useGetOneStoreQuery({ language: "RUSSIAN" });
+  // const { data: AdminStore } = useGetOneStoreQuery({ language: "RUSSIAN" });
+
+  // const { data } = useGetStoreProductsQuery(
+  //   {
+  //     storeId: AdminStore?.id,
+  //     page: page,
+  //     size: size,
+  //     search: search,
+  //   },
+  //   { skip: !AdminStore }
+  // );
 
   const { data } = useGetStoreProductsQuery({
-    storeId: AdminStore?.id,
-    page: page,
-    size: size,
-    search: search,
-  }, {skip: !AdminStore});
+    page: 1,
+    size: 10,
+    storeId: "4a19cc4a-53be-41d5-afba-e63fd6a6931c",
+  });
 
   return (
-    <div className="w-full h-[calc(100vh-60px)] pt-5">
-      <div className="w-full justify-between grid grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 gap-3 pb-10">
-      {/* <div className="flex gap-4 flew-wrap"> */}
-        {data?.content?.map((item) => (
-          <ProductCard key={item.id} {...item} />
-        ))}
+    <div className="w-full pt-5">
+      <div className="w-full ">
+        <div className="flex gap-1 flex-row flex-wrap">
+          {data?.content?.map((item) => (
+            <ProductCard
+              key={item?.id}
+              id={item?.id}
+              mainImage={item?.mainImage}
+              price={item?.price}
+              name={item?.name}
+              link={item?.id}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

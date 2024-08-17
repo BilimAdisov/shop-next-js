@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { User, Court, Favorite, Catalog, Search } from "@/assets/icons/Icons";
+import { User, Court, Search } from "@/assets/icons/Icons";
 import {
   Dropdown,
   DropdownItem,
@@ -15,10 +15,11 @@ import { CustomInput } from "@/components/UI/Input";
 import Modal from "@/components/UI/Modal";
 import { Login } from "@/components/Login";
 import { getSearch } from "@/store/slices/helper.slice";
+import Link from "next/link";
 
 export const ClientHeader = () => {
-  const {search} = useSelector(state => state.helper)
-  const dispatch = useDispatch()
+  const { search } = useSelector((state) => state.helper);
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const [code, setCode] = useState({
     username: "",
@@ -43,9 +44,11 @@ export const ClientHeader = () => {
       >
         <Login setIsVisible={setIsVisible} code={code} setCode={setCode} />
       </Modal>
-      <header className="fixed top-0 w-full h-[60px] background flex justify-center items-center">
+      <header className="fixed top-0 w-full h-[60px] background flex justify-center items-center z-[1]">
         <div className="w-full flex justify-between items-center gap-8 xs:gap-4 px-20 lg:px-16 md:px-12 sm:px-4 xs:px-2">
-          <h1 className="text-3xl text-white font-medium xs:text-lg">LOGO</h1>
+          <Link href={"/"}>
+            <h1 className="text-3xl text-white font-medium xs:text-lg">LOGO</h1>
+          </Link>
           <div className="w-full flex gap-10 xs:gap-2 items-center justify-end">
             <CustomInput
               placeholder="Искать..."
@@ -69,8 +72,9 @@ export const ClientHeader = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
-              <Favorite />
-              <Court />
+              <Link href={"/cart"}>
+                <Court />
+              </Link>
             </div>
           </div>
         </div>
