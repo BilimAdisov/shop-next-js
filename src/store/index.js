@@ -6,6 +6,7 @@ import CategoriesService from "@/services/categories.service";
 import FilesService from "@/services/files.service";
 
 import helperSlice from "./slices/helper.slice";
+import localCartSlice from "./slices/localCart.slice";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     [LoginService.reducerPath]: LoginService.reducer,
     [CategoriesService.reducerPath]: CategoriesService.reducer,
     [FilesService.reducerPath]: FilesService.reducer,
-    helper: helperSlice
+    helper: helperSlice,
+    cart: localCartSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

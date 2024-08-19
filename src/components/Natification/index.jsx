@@ -3,50 +3,46 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { MdOutlineError } from "react-icons/md";
 import { MdClose } from "react-icons/md";
+import { memo } from "react";
 
-const Notification = ({ children }) => {
+const Notification = memo(() => {
   return (
-    <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        gutter={8}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          // Define default options
-          className: "",
-          duration: 5000,
-          style: {
-            background: "#363636",
-            color: "#fff",
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+      containerStyle={{}}
+      toastOptions={{
+        // Define default options
+        className: "",
+        // duration: 5000,
+        style: {
+          background: "#363636",
+          color: "#fff",
+        },
+        // Default options for specific types
+        success: {
+          duration: 3000,
+          theme: {
+            primary: "green",
+            secondary: "black",
           },
-          // Default options for specific types
-          success: {
-            duration: 3000,
-            theme: {
-              primary: "green",
-              secondary: "black",
-            },
+        },
+        error: {
+          duration: 3000,
+          theme: {
+            primary: "red",
+            secondary: "black",
           },
-          error: {
-            duration: 3000,
-            theme: {
-              primary: "red",
-              secondary: "black",
-            },
-          },
-        }}
-      />
-      {children}
-    </>
+        },
+      }}
+    />
   );
-};
-
-export default Notification;
+});
 
 // Custom toast function
-export const customToast = (type, message) => {
+export const customToast = memo((type, message) => {
   const COLORS = { success: "#70e000", error: "#f21b3f" };
   const icons = {
     success: <IoCheckmarkCircleSharp className="text-[#70e000] w-8 h-8" />,
@@ -65,14 +61,15 @@ export const customToast = (type, message) => {
             transition={{ duration: 0.3 }}
             className="max-w-sm xs:max-w-[230px] w-full bg-gray-50 shadow-xl rounded-md h-20 pointer-events-auto flex overflow-hidden"
           >
-            <div style={{backgroundColor: COLORS[type]}} className={`w-1 h-20`}></div>
+            <div
+              style={{ backgroundColor: COLORS[type] }}
+              className={`w-1 h-20`}
+            ></div>
             <div className="w-full h-20 flex gap-4 items-center p-3 justify-between">
               {icons[type]}
               <div className="w-full mb-2">
                 <p className="font-sans font-[500] text-lg">{words[type]}</p>
-                <p className="font-[300] ">
-                  {message}
-                </p>
+                <p className="font-[300] ">{message}</p>
               </div>
               <MdClose
                 onClick={() => toast.dismiss(t.id)}
@@ -85,4 +82,6 @@ export const customToast = (type, message) => {
     ),
     { duration: 2000 }
   );
-};
+});
+
+export default Notification;

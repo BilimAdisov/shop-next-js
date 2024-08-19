@@ -7,7 +7,8 @@ import Notification from "@/components/Natification";
 export function ReduxProvider({ children }) {
   return (
     <Provider store={store}>
-      <Notification>{children}</Notification>
+      <Notification />
+      {children}
     </Provider>
   );
 }
